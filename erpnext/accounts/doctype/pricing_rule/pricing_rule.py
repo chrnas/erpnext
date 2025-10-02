@@ -586,6 +586,9 @@ def apply_price_discount_rule(pricing_rule, item_details, args):
 			)
 		item_details.update({"discount_percentage": 0.0})
 
+	effective_discount = (
+		item_details["discount_percentage"] if item_details.get("discount_percentage") else 0.0
+	)
 	for apply_on in ["Discount Amount", "Discount Percentage"]:
 		if pricing_rule.rate_or_discount != apply_on:
 			continue
@@ -593,7 +596,7 @@ def apply_price_discount_rule(pricing_rule, item_details, args):
 		field = frappe.scrub(apply_on)
 		if pricing_rule.apply_discount_on_rate and item_details.get("discount_percentage"):
 			# Apply discount on discounted rate
-			item_details[field] += (100 - item_details[field]) * (pricing_rule.get(field, 0) / 100)
+			effective_discount += (100 - effective_discount) * (pricing_rule.get(field, 0) / 100)
 		elif args.price_list_rate:
 			value = pricing_rule.get(field, 0)
 			calculate_discount_percentage = False
@@ -615,6 +618,7 @@ def apply_price_discount_rule(pricing_rule, item_details, args):
 				item_details.setdefault(field, 0)
 
 			item_details[field] += pricing_rule.get(field, 0) if pricing_rule else args.get(field, 0)
+	item_details[field] = effective_discount
 
 
 @frappe.whitelist()
