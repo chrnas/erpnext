@@ -615,6 +615,10 @@ def apply_price_discount_rule(pricing_rule, item_details, args):
 				item_details.setdefault(field, 0)
 
 			item_details[field] += pricing_rule.get(field, 0) if pricing_rule else args.get(field, 0)
+	if args.get("price_list_rate") and item_details.get("discount_percentage") is not None:
+		item_details["discount_amount"] = flt(
+			(flt(item_details.discount_percentage) / 100) * flt(args.price_list_rate)
+		)
 
 
 @frappe.whitelist()
