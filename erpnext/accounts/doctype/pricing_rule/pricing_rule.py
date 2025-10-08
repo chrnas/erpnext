@@ -592,7 +592,7 @@ def apply_price_discount_rule(pricing_rule, item_details, args):
 
 		field = frappe.scrub(apply_on)
 		if pricing_rule.apply_discount_on_rate and item_details.get("discount_percentage"):
-			# Apply discount on discounted rate
+			# Apply discount on discounted rate, test
 			item_details[field] += (100 - item_details[field]) * (pricing_rule.get(field, 0) / 100)
 		elif args.price_list_rate:
 			value = pricing_rule.get(field, 0)
