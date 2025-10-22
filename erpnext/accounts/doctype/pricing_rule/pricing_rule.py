@@ -10,7 +10,7 @@ import re
 import frappe
 from frappe import _, throw
 from frappe.model.document import Document
-from frappe.utils import cint, flt
+from frappe.utils import cint, flt, getdate
 
 apply_on_dict = {"Item Code": "items", "Item Group": "item_groups", "Brand": "brands"}
 
@@ -451,6 +451,13 @@ def get_pricing_rule_for_item(args, doc=None, for_validate=False):
 				pricing_rule.apply_rule_on_other_items = (
 					get_pricing_rule_items(pricing_rule, other_items=fetch_other_item) or []
 				)
+
+			posting_date = args.get("posting_date") or args.get("transaction_date")
+			if posting_date:
+				if pricing_rule.get("valid_from") and pricing_rule.get("valid_from") > getdate(posting_date):
+					continue
+				if pricing_rule.get("valid_upto") and pricing_rule.get("valid_upto") < getdate(posting_date):
+					continue
 
 			if pricing_rule.get("coupon_code_based") == 1:
 				if not args.coupon_code:
