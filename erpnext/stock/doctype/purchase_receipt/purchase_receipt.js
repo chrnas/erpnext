@@ -305,6 +305,28 @@ erpnext.stock.PurchaseReceiptController = class PurchaseReceiptController extend
 				);
 
 				cur_frm.page.set_inner_btn_group_as_primary(__("Create"));
+
+				cur_frm.add_custom_button(__("Purchase Receipt Serial and Batch Bundle Print"), () => {
+					const docname = cur_frm.doc.name;
+    				const print_format = "Purchase Receipt Serial and Batch Bundle Print";
+    				const url = `/printview?doctype=Purchase Receipt&name=${encodeURIComponent(docname)}&format=${encodeURIComponent(print_format)}`;
+					window.open(frappe.urllib.get_full_url(url), "_blank");
+				}, __("Print"));
+
+				cur_frm.add_custom_button(__("Serial No barcodes"), () => {
+					const docname = cur_frm.doc.name;
+    				const print_format = "Serial No Barcodes Print";
+    				const url = `/printview?doctype=Purchase Receipt&name=${encodeURIComponent(docname)}&format=${encodeURIComponent(print_format)}`;
+					window.open(frappe.urllib.get_full_url(url), "_blank");
+
+				}, __("Print"));
+
+				cur_frm.add_custom_button(__("Batch No barcodes"), () => {
+					const docname = cur_frm.doc.name;
+    				const print_format = "Batch No Barcodes Print";
+    				const url = `/printview?doctype=Purchase Receipt&name=${encodeURIComponent(docname)}&format=${encodeURIComponent(print_format)}`;
+					window.open(frappe.urllib.get_full_url(url), "_blank");
+				}, __("Print"));
 			}
 		}
 
