@@ -33,12 +33,12 @@ def set_print_templates_for_item_table(doc, settings):
 			"items": "templates/print_formats/includes/batch_no_barcodes.html",
 		}
 
-	if settings.print_serial_no_barcodes:
+	elif settings.print_serial_no_barcodes:
 		doc.print_templates = {
 			"items": "templates/print_formats/includes/serial_no_barcodes.html"
 		}
 
-	if settings.print_batch_no_barcodes and settings.print_serial_no_barcodes:
+	elif settings.print_batch_no_barcodes and settings.print_serial_no_barcodes:
 		doc.print_templates = {
 			"items": "templates/print_formats/includes/serial_and_batch_no_barcodes.html"
 		}
