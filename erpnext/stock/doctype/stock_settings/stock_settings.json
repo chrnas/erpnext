@@ -53,6 +53,16 @@
   "use_naming_series",
   "column_break_wslv",
   "naming_series_prefix",
+  "serial_and_batch_number_barcode_print_settings_section",
+  "print_serial_or_batch_number_for_barcode",
+  "print_item_name_for_barcode",
+  "print_item_cost_for_barcode",
+  "print_font_for_barcode",
+  "print_font_size_for_barcode",
+  "column_break_lbdm",
+  "print_height_for_barcode",
+  "print_width_for_barcode",
+  "print_barcode_color",
   "stock_reservation_tab",
   "enable_stock_reservation",
   "auto_reserve_stock",
@@ -546,6 +556,67 @@
    "fieldname": "validate_material_transfer_warehouses",
    "fieldtype": "Check",
    "label": "Validate Material Transfer Warehouses"
+  },
+  {
+   "fieldname": "serial_and_batch_number_barcode_print_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Serial and batch number barcode print settings"
+  },
+  {
+   "default": "1",
+   "fieldname": "print_serial_or_batch_number_for_barcode",
+   "fieldtype": "Check",
+   "label": "Print serial or batch number for barcode"
+  },
+  {
+   "default": "0",
+   "fieldname": "print_item_name_for_barcode",
+   "fieldtype": "Check",
+   "label": "Print item name for barcode"
+  },
+  {
+   "default": "0",
+   "fieldname": "print_item_cost_for_barcode",
+   "fieldtype": "Check",
+   "label": "Print item cost for barcode"
+  },
+  {
+   "default": "Helvetica",
+   "fieldname": "print_font_for_barcode",
+   "fieldtype": "Select",
+   "label": "Print font for barcode",
+   "options": "Helvetica\nArial\nVerdana\nsans-serif\nTahoma\nTimes\nConsolas"
+  },
+  {
+   "default": "12",
+   "fieldname": "print_font_size_for_barcode",
+   "fieldtype": "Int",
+   "label": "Print font size for barcode",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "column_break_lbdm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "40",
+   "fieldname": "print_height_for_barcode",
+   "fieldtype": "Int",
+   "label": "Print height for barcode",
+   "non_negative": 1
+  },
+  {
+   "default": "2",
+   "fieldname": "print_width_for_barcode",
+   "fieldtype": "Int",
+   "label": "Print width for barcode",
+   "non_negative": 1
+  },
+  {
+   "default": "#000000",
+   "fieldname": "print_barcode_color",
+   "fieldtype": "Color",
+   "label": "Print color for barcode"
   }
  ],
  "icon": "icon-cog",
@@ -553,7 +624,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-11-11 11:35:39.864923",
+ "modified": "2025-12-01 18:34:41.608303",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Settings",

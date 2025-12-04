@@ -112,6 +112,9 @@ class AccountsController(TransactionBase):
 		if taxes_field and taxes_field.fieldtype == "Table":
 			print_setting_fields += ["print_taxes_with_zero_amount"]
 
+		if self.docstatus == 1 and self.doctype in ["Purchase Receipt", "Stock Entry", "Delivery Note", "Purchase Invoice", "Sales Invoice"]:
+			print_setting_fields += ["print_batch_no_barcodes", "print_serial_no_barcodes"]
+
 		return print_setting_fields
 
 	@property

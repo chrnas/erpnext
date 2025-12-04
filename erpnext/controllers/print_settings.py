@@ -28,6 +28,20 @@ def set_print_templates_for_item_table(doc, settings):
 		] = "templates/print_formats/includes/item_table_description.html"
 		doc.flags.format_columns = format_columns
 
+	if settings.print_batch_no_barcodes:
+		doc.print_templates = {
+			"items": "templates/print_formats/includes/batch_no_barcodes.html",
+		}
+
+	if settings.print_serial_no_barcodes:
+		doc.print_templates = {
+			"items": "templates/print_formats/includes/serial_no_barcodes.html"
+		}
+
+	if settings.print_batch_no_barcodes and settings.print_serial_no_barcodes:
+		doc.print_templates = {
+			"items": "templates/print_formats/includes/serial_and_batch_no_barcodes.html"
+		}
 
 def set_print_templates_for_taxes(doc, settings):
 	doc.flags.show_inclusive_tax_in_print = doc.is_inclusive_tax()

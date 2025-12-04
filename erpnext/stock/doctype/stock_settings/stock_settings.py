@@ -54,6 +54,14 @@ class StockSettings(Document):
 		over_delivery_receipt_allowance: DF.Float
 		over_picking_allowance: DF.Percent
 		pick_serial_and_batch_based_on: DF.Literal["FIFO", "LIFO", "Expiry"]
+		print_barcode_color: DF.Color | None
+		print_font_for_barcode: DF.Literal["Helvetica", "Arial", "Verdana", "sans-serif", "Tahoma", "Times", "Consolas"]
+		print_font_size_for_barcode: DF.Int
+		print_height_for_barcode: DF.Int
+		print_item_cost_for_barcode: DF.Check
+		print_item_name_for_barcode: DF.Check
+		print_serial_or_batch_number_for_barcode: DF.Check
+		print_width_for_barcode: DF.Int
 		reorder_email_notify: DF.Check
 		role_allowed_to_create_edit_back_dated_transactions: DF.Link | None
 		role_allowed_to_over_deliver_receive: DF.Link | None

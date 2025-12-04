@@ -1,0 +1,119 @@
+{% set stock_settings = frappe.get_doc("Stock Settings") %}
+
+<style>
+  .barcode-text {
+	font-size: {{ stock_settings.print_font_size_for_barcode }}px;
+	color: {{ stock_settings.print_barcode_color }};
+	font-family: {{ stock_settings.print_font_for_barcode }};
+  }
+</style>
+
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<th>No</th>
+			<th>Item Name</th>
+			<th>Batch No Barcodes</th>
+			<th>Serial No Barcodes</th>
+		</tr>
+		{%- for row in doc.items -%}
+			<tr>
+				<td>{{ row.idx }}</td>
+				<td>{{ row.item_name }}</td>
+				{% set bundle_data = frappe.get_all(
+					'Serial and Batch Entry',
+					fields=['batch_no','serial_no'],
+					filters={'parent': row.serial_and_batch_bundle}
+				) %}
+				<td>
+					{% if bundle_data %}
+						{% for d in bundle_data %}
+							{% if d.batch_no %}
+								<div style="text-align:center; margin-bottom: 10px;">
+									{% if stock_settings.print_item_name_for_barcode %}
+										<div class="barcode-text" style="font-weight:600;">
+											{{ row.item_name }}
+										</div>
+									{% endif %}
+
+									{% if stock_settings.print_item_cost_for_barcode %}
+										<div class="barcode-text" style="margin-bottom:4px;">
+											{{ row.rate }} {{ doc.currency }}
+										</div>
+									{% endif %}
+
+									<svg class="batch_no"
+										jsbarcode-value="{{ d.batch_no }}"
+										jsbarcode-text=" "
+										jsbarcode-displayValue="false"
+										jsbarcode-width="{{stock_settings.print_width_for_barcode}}"
+										jsbarcode-height="{{stock_settings.print_height_for_barcode}}"
+										jsbarcode-lineColor="{{stock_settings.print_barcode_color}}"
+									>
+									</svg>
+									{% if stock_settings.print_serial_or_batch_number_for_barcode %}
+										<div class="barcode-text" style="margin-top:4px;">
+											{{ d.batch_no }}
+										</div>
+									{% endif %}
+								</div>
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<div>
+							Serial and batch bundle not found
+						</div>
+					{% endif %}
+				</td>
+				<td>
+					{% if bundle_data %}
+					{% for d in bundle_data %}
+						{% if d.serial_no %}
+							<div style="text-align:center; margin-bottom: 10px;">
+								{% if stock_settings.print_item_name_for_barcode %}
+									<div class="barcode-text" style="font-weight:600;">
+										{{ row.item_name }}
+									</div>
+								{% endif %}
+
+								{% if stock_settings.print_item_cost_for_barcode %}
+									<div class="barcode-text" style="margin-bottom:4px;">
+										{{ row.rate }} {{ doc.currency }}
+									</div>
+								{% endif %}
+
+								<svg class="serial_no"
+									jsbarcode-value="{{ d.serial_no }}"
+									jsbarcode-text=" "
+									jsbarcode-displayValue="false"
+									jsbarcode-width="{{stock_settings.print_width_for_barcode}}"
+									jsbarcode-height="{{stock_settings.print_height_for_barcode}}"
+									jsbarcode-lineColor="{{stock_settings.print_barcode_color}}"
+								>
+								</svg>
+								{% if stock_settings.print_serial_or_batch_number_for_barcode %}
+									<div class="barcode-text" style="margin-top:4px;">
+										{{ d.serial_no }}
+									</div>
+								{% endif %}
+							</div>
+						{% endif %}
+					{% endfor %}
+					{% else %}
+						<div>
+							Serial and batch bundle not found
+						</div>
+					{% endif %}
+				</td>
+			</tr>
+		{%- endfor -%}
+	</tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		JsBarcode('.batch_no').init();
+		JsBarcode('.serial_no').init();
+	});
+</script>

@@ -114,6 +114,20 @@ def create_print_setting_custom_fields():
 					"default": "0",
 					"insert_after": "allow_print_for_cancelled",
 				},
+				{
+					"label": _("Print Batch No barcodes"),
+					"fieldname": "print_batch_no_barcodes",
+					"fieldtype": "Check",
+					"default": "0",
+					"insert_after": "print_uom_after_quantity",
+				},
+				{
+					"label": _("Print Serial No barcodes"),
+					"fieldname": "print_serial_no_barcodes",
+					"fieldtype": "Check",
+					"default": "0",
+					"insert_after": "print_batch_no_barcodes",
+				},
 			]
 		}
 	)
